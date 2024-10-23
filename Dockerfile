@@ -17,7 +17,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN touch /var/log/cron.log
 
 # Setup cron job (run every minute for testing)
-RUN (crontab -l ; echo "* * * * * /usr/local/bin/python /app/perilipsi.py >> /var/log/cron.log 2>&1") | crontab
+RUN (crontab -l ; echo "0 0 * * * /usr/local/bin/python /app/perilipsi.py >> /var/log/cron.log 2>&1") | crontab
 
 # Run the command on container startup
 CMD cron && tail -f /var/log/cron.log
