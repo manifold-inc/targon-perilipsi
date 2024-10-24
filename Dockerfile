@@ -18,4 +18,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY perilipsi.py ./
 
 # Run the command on container startup
-CMD cron && tail -f /var/log/cron.log
+CMD ["cron", "&&", "tail", "f", "/var/log/cron.log"]
