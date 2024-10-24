@@ -1,9 +1,7 @@
 import pymysql
 import os
-from dotenv import load_dotenv
 
 pymysql.install_as_MySQLdb()
-load_dotenv()
 
 db = pymysql.connect(
     host=os.getenv("DATABASE_HOST"),
