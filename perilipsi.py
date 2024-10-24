@@ -60,7 +60,7 @@ def delete_processed_records():
 
         delete_query = """
             DELETE FROM miner_response
-            WHERE timestamp <= CURDATE() - INTERVAL 1 DAY 10 MINUTE
+            WHERE timestamp <= CURDATE() - INTERVAL 1 DAY - INTERVAL 10 MINUTE
         """
 
         cursor.execute(delete_query)
