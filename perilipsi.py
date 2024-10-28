@@ -24,7 +24,7 @@ def calculate_and_insert_daily_stats():
             AVG(time_for_all_tokens) as avg_time_for_all_tokens,
             AVG(total_time) as avg_total_time,
             AVG(tps) as avg_tps,
-            SUM(JSON_LENGTH(tokens)) as total_tokens
+            SUM(total_tokens) as total_tokens
         FROM miner_response
         WHERE timestamp >= CURDATE() - INTERVAL 1 DAY 
           AND timestamp < CURDATE()
