@@ -1,8 +1,16 @@
 # Use an official Python runtime as the base image
 FROM python:3.9-slim
 
+#Set env variable for tiemzone
+ENV TZ=UTC
+
 # Install cron
-RUN apt-get update && apt-get -y install cron
+RUN apt-get update && \
+    apt-get install -y cron tzdata && \
+    ln -sf /usr/share/zoneinfo/$TZ /etc/localtime && \
+    echo $TZ > /etc/timezone && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Set the working directory
 WORKDIR /app
