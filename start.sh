@@ -17,11 +17,11 @@ printenv > /etc/environment
 # Find the path to the Python interpreter
 PYTHON_PATH=$(which python)
 
-# Set up the cron job to run the Python script every minute
-echo "0 0 * * * cd /app && $PYTHON_PATH perilipsi.py >> /var/log/cron.log 2>&1" > /etc/cron.d/mycron
+# Set up the cron job to run the Python script at 11 PM everynight
+echo "00 23 * * * cd /app && $PYTHON_PATH perilipsi.py >> /var/log/cron.log 2>&1" > /etc/cron.d/mycron
 
 # Set the correct permissions for the cron file
-chmod 0644 /etc/cron.d/mycrond
+chmod 0644 /etc/cron.d/mycron
 
 # Apply the cron job
 crontab /etc/cron.d/mycron
