@@ -21,15 +21,22 @@ ENDON_URL = os.getenv("ENDON_URL")
 def sendErrorToEndon(error: Exception, error_traceback: str, endpoint: str) -> None:
     try:
         error_payload = {
+            "service": "perilipsi",
+            "endpoint": endpoint,
             "error": str(error),
             "traceback": error_traceback,
-            "endpoint": endpoint,
-            "timestamp": time.time(),
         }
+        response = requests.post(
+            str(ENDON_URL),
+            json=error_payload,
+            headers={"Content-Type": "application/json"}
+        )
 
-        requests.post((str(ENDON_URL) + "/report"), json=error_payload)
-
-        print(f"Error report sent to Endon: {str(error)}")
+        if response.status_code != 200:
+            print(f"Failed to report error to Endon. Status code: {response.status_code}")
+            print(f"Response: {response.text}")
+        else:
+            print("Error successfully reported to Endon")
     except Exception as e:
         print(f"Failed to report error to Endon: {str(e)}")
 
@@ -71,7 +78,7 @@ def calculate_and_insert_daily_stats():
     except (pymysql.Error, Exception) as e:
         error_traceback = traceback.format_exc()
         sendErrorToEndon(
-            e, error_traceback, "perlispi-calculate_and_insert_daily_stats"
+            e, error_traceback, "calcorinsertion"
         )
         print(
             f"{'Database' if isinstance(e, pymysql.Error) else 'An'} error occurred: {e}"
@@ -114,7 +121,7 @@ def delete_processed_records():
 
     except pymysql.Error as e:
         error_traceback = traceback.format_exc()
-        sendErrorToEndon(e, error_traceback, "perilispi-delete_processed_records")
+        sendErrorToEndon(e, error_traceback, "deletion")
         print(f"Database error occurred: {e}")
 
 
