@@ -21,7 +21,7 @@ ENDON_URL = os.getenv("ENDON_URL")
 def sendErrorToEndon(error: Exception, error_traceback: str, endpoint: str) -> None:
     try:
         error_payload = {
-            "service": "perilipsi",
+            "service": "targon-perilipsi",
             "endpoint": endpoint,
             "error": str(error),
             "traceback": error_traceback,
